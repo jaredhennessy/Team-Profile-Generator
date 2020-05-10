@@ -68,62 +68,78 @@ let questions = [
       return answers.role === "Intern";
     },
   },
+  {
+    type: "confirm",
+    name: "repeat",
+    message: "Enter another employee?",
+  },
 ];
 
-inquirer.prompt(questions).then((answers) => {
-  //   console.log(JSON.stringify(answers));
-  switch (answers.role) {
-    case "Manager":
-      const manager = new Manager(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.officeNumber
-      );
-      console.log(manager.getName());
-      console.log(manager.getId());
-      console.log(manager.getEmail());
-      console.log(manager.getOfficeNumber());
-      console.log(manager.getRole());
-      break;
+let employees = [];
+let repeat = false;
 
-    case "Engineer":
-      const engineer = new Engineer(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.github
-      );
-      console.log(engineer.getName());
-      console.log(engineer.getId());
-      console.log(engineer.getEmail());
-      console.log(engineer.getGithub());
-      console.log(engineer.getRole());
-      break;
+function getEmployee() {
+  inquirer
+    .prompt(questions)
+    .then((answers) => {
+      repeat = answers.repeat;
+      switch (answers.role) {
+        case "Manager":
+          const manager = new Manager(
+            answers.name,
+            answers.id,
+            answers.email,
+            answers.officeNumber
+          );
+          employees.push(manager);
+          break;
 
-    case "Intern":
-      const intern = new Intern(
-        answers.name,
-        answers.id,
-        answers.email,
-        answers.school
-      );
-      console.log(intern.getName());
-      console.log(intern.getId());
-      console.log(intern.getEmail());
-      console.log(intern.getSchool());
-      console.log(intern.getRole());
-      break;
+        case "Engineer":
+          const engineer = new Engineer(
+            answers.name,
+            answers.id,
+            answers.email,
+            answers.github
+          );
+          employees.push(engineer);
+          break;
 
-    default:
-      const employee = new Employee(answers.name, answers.id, answers.email);
-      console.log(employee.getName());
-      console.log(employee.getId());
-      console.log(employee.getEmail());
-      console.log(employee.getRole());
-      break;
-  }
-});
+        case "Intern":
+          const intern = new Intern(
+            answers.name,
+            answers.id,
+            answers.email,
+            answers.school
+          );
+          employees.push(intern);
+          break;
+
+        default:
+          const employee = new Employee(
+            answers.name,
+            answers.id,
+            answers.email
+          );
+          employees.push(employee);
+          break;
+      }
+    })
+    .then(() => {
+      if (repeat) {
+        getEmployee();
+      } else {
+        console.log(employees);
+        fs.writeFile(outputPath, render(employees), function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log("HTML written to ./output/team.html");
+        });
+      }
+    });
+}
+
+getEmployee();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
