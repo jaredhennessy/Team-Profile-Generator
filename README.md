@@ -1,6 +1,6 @@
 # [Team-Profile-Generator](https://github.com/jaredhennessy/Team-Profile-Generator)
 
-![JavaScript](https://img.shields.io/static/v1?label=made%20with&message=JavaScript&color=informational) ![MIT](https://img.shields.io/static/v1?label=license&message=MIT&color=brightgreen)
+![JavaScript](https://img.shields.io/static/v1?label=made%20with&message=JavaScript&color=primary) ![npm](https://img.shields.io/static/v1?label=npm&message=v6.14.4&color=informational)
 
 ## Description
 
@@ -29,7 +29,7 @@ As a manager, I want to generate a webpage that displays my team's basic info so
 
 ## License
 
-This project is licensed under the MIT license.
+This project is unlicensed for public domain us.
 
 ## Contributing
 

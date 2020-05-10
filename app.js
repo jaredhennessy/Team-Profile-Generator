@@ -38,18 +38,19 @@ let questions = [
   },
   {
     type: "input",
-    // type: "number",
     name: "officeNumber",
     message: "What is the Manager's office phone number?",
-    // validate: function (value) {
-    //   var valid = !isNaN(parseFloat(value));
-    //   return (
-    //     valid || "Please enter a phone number without dashes or parentheses."
-    //   );
-    // },
-    // filter: Number,
     when: function (answers) {
       return answers.role === "Manager";
+    },
+    validate: function (value) {
+      var pass = value.match(
+        /^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i
+      );
+      if (pass) {
+        return true;
+      }
+      return "Please enter a valid phone number";
     },
   },
   {
@@ -128,6 +129,10 @@ function getEmployee() {
       if (repeat) {
         getEmployee();
       } else {
+        // After the user has input all employees desired, call the `render` function (required
+        // above) and pass in an array containing all employee objects; the `render` function will
+        // generate and return a block of HTML including templated divs for each employee!
+
         // console.log(employees);
         fs.writeFile(outputPath, render(employees), function (err) {
           if (err) {
@@ -140,22 +145,3 @@ function getEmployee() {
 }
 
 getEmployee();
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
