@@ -128,7 +128,7 @@ function getEmployee() {
       if (repeat) {
         getEmployee();
       } else {
-        console.log(employees);
+        // console.log(employees);
         fs.writeFile(outputPath, render(employees), function (err) {
           if (err) {
             return console.log(err);
