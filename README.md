@@ -2,6 +2,10 @@
 
 ![JavaScript](https://img.shields.io/static/v1?label=made%20with&message=JavaScript&color=primary) ![npm](https://img.shields.io/static/v1?label=npm&message=v6.14.4&color=informational)
 
+## Demo
+
+[video](https://drive.google.com/file/d/1fxgwF9eGcqQPzyXcXW_BxllDXgp6n0Lg/view)
+
 ## Description
 
 tool that generates an html page dynamically using node.js based on user inputs
